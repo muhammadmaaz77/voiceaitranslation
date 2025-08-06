@@ -2,7 +2,7 @@
 
 ## 🎯 Project Overview
 
-**Polyglot Babel Bridge** is a real-time voice translation application that enables seamless communication between people speaking different languages. The app captures voice input, translates it using AI (Gemini API), and speaks the translation back in the target language.
+**Real Time AI Voice Translation** is a real-time voice translation application that enables seamless communication between people speaking different languages. The app captures voice input, translates it using AI (Gemini API), and speaks the translation back in the target language.
 
 ## 🏗️ Architecture Overview
 
@@ -283,4 +283,4 @@ The app supports major world languages including:
 
 ---
 
-*This documentation covers the current state of the Polyglot Babel Bridge application. For questions or contributions, please refer to the team leads.*
+*This documentation covers the current state of the Real Time AI Voice Translation application. For questions or contributions, please refer to the team leads.*

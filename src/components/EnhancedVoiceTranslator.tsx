@@ -101,7 +101,7 @@ export const EnhancedVoiceTranslator: React.FC = () => {
               <Zap className="w-6 h-6 text-primary-foreground" />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Polyglot Babel Bridge
+              Real Time AI Voice Translation
             </h1>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
