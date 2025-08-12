@@ -1,8 +1,15 @@
 // Translation service using Gemini API
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
-// Get API key from Supabase Edge Function
+// Get API key from Supabase Edge Function or environment variable (for local dev)
 const getApiKey = async (): Promise<string> => {
+  // For local development, check environment variable first
+  const localApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (localApiKey) {
+    return localApiKey;
+  }
+
+  // For production, use Supabase Edge Function
   try {
     const response = await fetch('/functions/v1/get-gemini-key', {
       method: 'GET',
@@ -12,14 +19,14 @@ const getApiKey = async (): Promise<string> => {
     });
     
     if (!response.ok) {
-      throw new Error('Failed to get API key');
+      throw new Error('Failed to get API key from server');
     }
     
     const data = await response.json();
     return data.apiKey;
   } catch (error) {
     console.error('Error getting API key:', error);
-    throw new Error('API key not configured properly');
+    throw new Error('API key not configured. Please set VITE_GEMINI_API_KEY environment variable for local development.');
   }
 };
 
