@@ -1,6 +1,27 @@
 // Translation service using Gemini API
-const GEMINI_API_KEY = 'AIzaSyAL0fJ-NSkD1sC67FbhpYBu2Xsfo4UbHLU';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+
+// Get API key from Supabase Edge Function
+const getApiKey = async (): Promise<string> => {
+  try {
+    const response = await fetch('/functions/v1/get-gemini-key', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to get API key');
+    }
+    
+    const data = await response.json();
+    return data.apiKey;
+  } catch (error) {
+    console.error('Error getting API key:', error);
+    throw new Error('API key not configured properly');
+  }
+};
 
 export interface TranslationRequest {
   text: string;
@@ -25,6 +46,8 @@ export class TranslationService {
 
   async translateText({ text, fromLanguage, toLanguage }: TranslationRequest): Promise<TranslationResponse> {
     try {
+      const apiKey = await getApiKey();
+      
       const prompt = `Translate the following text from ${fromLanguage} to ${toLanguage}. 
       Only return the translated text, nothing else.
       
@@ -42,7 +65,7 @@ export class TranslationService {
         ]
       };
 
-      const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+      const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
